@@ -1,0 +1,34 @@
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/nlu/components/
+language: pt
+
+pipeline:
+  - name: SpacyNLP
+    model: "pt_core_news_sm"
+    # when retrieving word vectors, this will decide if the casing
+    # of the word is relevant. E.g. `hello` and `Hello` will
+    # retrieve the same vector, if set to `False`. For some
+    # applications and models it makes sense to differentiate
+    # between these two words, therefore setting this to `True`.
+    case_sensitive: False
+  - name: SpacyTokenizer
+  - name: CountVectorsFeaturizer
+  - name: DIETClassifier
+    epochs: 200
+    random_seed: 2
+  - name: EntitySynonymMapper
+  - name: FallbackClassifier
+    threshold: 0.4
+
+policies:
+  - name: MemoizationPolicy
+    max_history: 3
+  - name: TEDPolicy
+    max_history: 3
+    epochs: 60
+    random_seed: 5
+    validation_split: 0.2
+  - name: RulePolicy
+    core_fallback_threshold: 0.4
+    core_fallback_action_name: "action_my_fallback"
+    enable_fallback_prediction: false
