@@ -1,162 +1,61 @@
 version: "3.1"
 
 intents:
-#Intents padrão
-  - greet
-  - goodbye
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
-  - thank
-#Categoria: Ainda não está estagiando e Quem está estagiando
-  - faq_estagio
-  - faq_modalidades_estagio
-#Intents para menu de categorias
-  - categoria_estagio
-  - categoria_ag_ex
-#Intents especiais
+  - greet
+  - thankyou
+  - goodbye
+  - search_concerts
+  - search_venues
+  - compare_reviews
   - bot_challenge
+  - nlu_fallback
+  - how_to_get_started
+
+entities:
+  - name
+
+slots:
+  concerts:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+  venues:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+  likes_music:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
 
 responses:
-
-#Intents padrão
   utter_greet:
-  - text: "Olá, estou aqui para te ajudar! Pergunte qualquer coisa relacionada ao estágio."
-  - text: "Opa, estou aqui para te ajudar! Pergunte qualquer coisa relacionada ao estágio."
-    buttons:
-      - title: Dúvidas sobre o estágio
-        payload: /categoria_estagio
-      - title: Agência Experimental
-        payload: /categoria_ag_ex
-      - title: Agente de Integração
-        payload: /categoria_ag_integ
-      - title: Entidades Concedentes
-        payload: /categoria_ent_conce
-
-  utter_cheer_up:
-  - text: "Aqui algo para te animar:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Isso te ajudou?"
-
-  utter_happy:
-  - text: "Ótimo, seja forte!"
-
+    - text: "Hey there!"
   utter_goodbye:
-  - text: "Tchau!"
-  - text: "Tchau Tchau!"
-
-  utter_thank:
-  - text: "De nada!"
-
-# Categoria: Ainda não está estagiando e Quem está estagiando
-  utter_faq_estagio:
-  - text: "Estágio é ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa à preparação para o trabalho produtivo de estudantes. O estágio integra o itinerário formativo do estudante e faz parte do projeto pedagógico do curso (art. 1º)"
-
-  utter_faq_modalidades_estagio:
-  - text: "Estágio obrigatório, que é aquele definido como tal no projeto do curso, cuja carga horária é requisito para aprovação e obtenção do diploma, e estágio não obrigatório, que é aquele desenvolvido como atividade opcional, acrescida à carga horária regular e obrigatória (§§ 1º e 2º do art. 2º)."
-
-  utter_faq_quem_pode_ser_estagiario:
-  - text: "Estudantes que estejam frequentando o ensino regular em instituições de educação superior, de educação profissional, de ensino médio, da educação especial e dos anos finais do ensino fundamental, na modalidade profissional da educação de jovens e adultos (art. 1º)."
-
-  utter_faq_estrangeiro_pode_estagiar:
-  - text: "Sim, desde que o estudante estrangeiro esteja regularmente matriculado em curso superior no país autorizado ou reconhecido e seja observado o prazo do visto temporário de estudante, na forma da legislação aplicável (art. 4º)."
-
-  utter_faq_estagio_cria_vinculo_empregatico:
-  - text: "Não. O estágio é regido por legislação própria e, desde que observados os requisitos legais e as obrigações contidas no termo de compromisso de estágio, não estabelece vínculo empregatício de qualquer natureza, para todos os fins da legislação trabalhista e previdenciária (caput e § 2º do art. 3º c/c art. 15)."
-
-  utter_faq_requisitos_legais_estagio:
-  - text: |
-        Para formação da relação de estágio, devem ser observados os seguintes requisitos: 
-        a) matrícula e frequência regular do estudante público-alvo da lei;
-        b) celebração do termo de compromisso entre o estudante, a parte concedente do estágio e a instituição de ensino;
-        c) compatibilidade entre as atividades desenvolvidas no estágio e as previstas no termo de compromisso. (incisos, I, II, III do art. 3º).
-
-  utter_faq_atividades_equiparadas_estagio:
-  - text: "Sim, desde que previstas no projeto pedagógico do curso (§ 3º do art. 2º)."
-
-  utter_faq_gestante_pode_estagiar:
-  - text: "Sim. Não há nenhum empecilho da estudante gestante estagiar. Como todo estágio, sujeita-se às regras da Lei 11.788/08."
-
-  utter_faq_carteira_de_trabalho:
-  - text: "Não há obrigatoriedade para a expedição e anotação do estágio na Carteira de Trabalho e Previdência Social, uma vez que estágio não é emprego, sendo definido em legislação própria."
-
-  utter_faq_comprovacao_de_regularidade_estagio:
-  - text: |
-        a) o termo de compromisso de estágio, devidamente assinado pela empresa concedente, pela instituição de ensino e pelo estudante;
-        b) o certificado individual de seguro de acidentes pessoais;
-        c) comprovação da regularidade da situação escolar do estudante;
-        d) comprovante de pagamento da bolsa ou equivalente e do auxílio-transporte;
-        e) verificação da compatibilidade entre as atividades desenvolvidas no estágio e aquelas previstas no termo de compromisso. (Cartilha Esclarecedora sobre a Lei de Estágio / MTE).
-
-  utter_faq_duracao_do_estagio:
-  - text: |
-        A jornada de atividade em estágio não deve ultrapassar: 
-        a) 4 (quatro) horas diárias e 20 (vinte) horas semanais, no caso de estudantes de educação especial e dos anos finais do ensino fundamental, na modalidade de educação de jovens e adultos;
-        b) 6 (seis) horas diárias e 30 (trinta) horas semanais, no caso de estudantes do ensino superior, da educação profissional de nível médio e do ensino médio regular;
-        c) 40 (quarenta) horas semanais, no caso do estágio relativo a cursos que alternam teoria e prática, nos períodos em que não estão programadas aulas presenciais, desde que previsto no projeto pedagógico do curso e da instituição de ensino (incisos I, II e § 1º do art. 10).
-
-# Categoria: Agência Experimental
-  utter_faq_agencia_experimental:
-  - text: "A Agência Experimental é geralmente uma atividade de extensão desenvolvida nos cursos superiores. Seu objetivo é desenvolver as habilidades dos alunos voltadas para suas atuações no mercado de trabalho. Ela tem uma organização semelhante à agências reais do mercado, com cargos direcionados para atividades específicas, planejamento, projetos e prazos a serem cumpridos. Normalmente, os professores são os responsáveis por selecionar os alunos que participam da atividade de extensão. Eles também orientam os estudantes e tiram dúvidas sobre as atividades de cada projeto."
-
-  utter_faq_como_estagiar_agencia_experimental:
-  - text: "A cada semestre a CGE enviará e-mail para os alunos informando a abertura das vagas para trabalhar na agência experimental, há possibilidade de cumprir as horas de estágio sendo não obrigatório, porém será dada prioridade aos alunos concluintes na categoria estágio obrigatório."
-
-  utter_faq_agencia_experimental_presencial:
-  - text: "Sim, o estágio na agência experimental é presencial, abrindo apenas exceção remotas em casos de calamidade pública."
-
-  utter_faq_agencia_experimental_tipo_trabalho:
-  - text: "Em sua maioria têm funções relacionadas a planejamento e desenvolvimento de projetos contendo prazos a serem cumpridos, é uma experiência que se equivale a adquirida em uma empresa júnior."
-
-  utter_faq_agencia_experimental_supervisores:
-  - text: |
-        No momento, temos quatro professores:
-        1. Andrea Ribeiro com dois projetos: Chatbot e Gerenciamento dos Hardwares do Laboratório Loyola
-        2. Diego Pinheiro com dois projetos: Google Apps Script e Certificados
-        3. Rodrigo de Paula com dois projetos:  Alocação de Professores em sala (Python e Algoritmo Genérico) e Criação de ferramenta facilitadora para medir desempenho dos alunos e turmas.
-        4. Rafael Roque com dois projetos: Chatbot e Pentest
-
-  utter_faq_agencia_experimental_horas_contabilizadas:
-  - text: "As horas são registradas por meio de uma ata na qual o estagiário preencherá o horário de entrada e saída, além de sua assinatura. No final de cada mês, o supervisor irá assinar a ata e entregará à coordenadora de estágio, que por sua vez passará para a reitoria, que contabiliza as horas totais do estágio."
-
-#Intents para menu de categorias
-  utter_categoria_estagio:
-  - text: "Selecione alguma pergunta ou pergunte você mesmo!"
-    buttons:
-    - title: O que é o estágio?
-      payload: /ques_estagio
-    - title: Modalidades de estágio
-      payload: /ques_modalidades_estagio
-    - title: Quem pode ser estagiário?
-      payload: /ques_quem_pode_ser_estagiario
-
-#Intents especiais
-  utter_nao:
-  - text: "Não."
-  - text: "Não"
-
+    - text: "Goodbye :("
+  utter_default:
+    - text: "Sorry, I didn't get that, can you rephrase?"
+  utter_youarewelcome:
+    - text: "You're very welcome."
   utter_iamabot:
-  - text: "Eu sou um robô. 🤖"
-  - text: "Eu sou somente um robô. 🤖"
-
-  utter_fallback:
-  - text: Desculpe! Não consegui entender sua mensagem! Selecione uma das opções.
-    buttons:
-      - title: Dúvidas sobre o estágio
-        payload: /categoria_estagio
-      - title: Agência Experimental
-        payload: /categoria_ag_ex
-      - title: Agente de Integração
-        payload: /categoria_ag_integ
-      - title: Entidades Concedentes
-        payload: /categoria_ent_conce
+    - text: "I am a bot, powered by Rasa."
+  utter_get_started:
+    - text: "I can help you find concerts and venues. Do you like music?"
+  utter_awesome:
+    - text: 'Awesome! You can ask me things like "Find me some concerts" or "What''s a good venue"'
 
 actions:
-  - action_my_fallback
+  - action_search_concerts
+  - action_search_venues
+  - action_show_concert_reviews
+  - action_show_venue_reviews
+  - action_set_music_preference
 
 session_config:
-  session_expiration_time: 60
+  session_expiration_time: 60 # value in minutes
   carry_over_slots_to_new_session: true
